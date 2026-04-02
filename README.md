@@ -21,7 +21,7 @@ This project is divided into 5 core modules, ensuring a balanced workload across
 * **Member 1 (Mithesha Nuwanjana|@MNuwanjana):** Core User Hub (Homepage, User Dashboard & Profile Settings)
 * **Member 2 (Name|@username):** User Authentication (Login, Signup, Logout & Session Management)
 * **Member 3 (Name|@username):** Catalog & UI Lead (Book Search, Discovery, Global CSS/Styling)
-* **Member 4 (Name|@username):** Admin Panel (Inventory Management: Add, Edit, Delete Books)
+* **Member 4 (Amaya Senadheera|@Amaya-Senadheera):** Admin Panel (Inventory Management: Add, Edit, Delete Books)
 * **Member 5 (Name|@username):** Library Operations (Borrowing Logic, Return Actions, & Reviews)
 
 ## 📁 Project Structure
