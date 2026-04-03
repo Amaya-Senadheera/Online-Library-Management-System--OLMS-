@@ -155,7 +155,7 @@ while ($row = mysqli_fetch_assoc($latest_books_query)) {
         
         <div class="d-flex justify-content-center gap-3">
             <a href="catalog/books.php" class="btn btn-primary btn-lg px-5 shadow border-0">
-                <i class="bi bi-book-half"></i> Start Browsing
+                 Start Browsing
             </a>
         </div>
     </div>

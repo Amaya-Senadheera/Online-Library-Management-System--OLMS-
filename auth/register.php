@@ -19,7 +19,8 @@ if (isset($_POST['register'])) {
                   VALUES ('$username', '$email', '$password', 'member')";
 
         if (mysqli_query($conn, $query)) {
-            $success = "Registration successful! Redirecting to login...";
+            // Updated success message to match login style
+            $success = "✅ Registration successful! Welcome, " . htmlspecialchars($username) . "!";
             
             // Redirect to login page after 2 seconds
             echo "<meta http-equiv='refresh' content='2;url=login.php'>";
@@ -32,33 +33,48 @@ if (isset($_POST['register'])) {
 
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h2 class="text-center mb-4">Register New Account</h2>
+        <div class="col-md-5"> <h2 class="text-center mb-4 fw-bold">Register New Account</h2>
 
             <?php if (isset($error)): ?>
-                <div class="alert alert-danger"><?php echo $error; ?></div>
+                <div class="alert alert-danger shadow-sm border-0"><?php echo $error; ?></div>
             <?php endif; ?>
 
             <?php if (isset($success)): ?>
-                <div class="alert alert-success"><?php echo $success; ?></div>
+                
+                <div class="alert alert-success text-center shadow-sm p-4 border-0">
+                    <h5 class="mb-3"><?php echo $success; ?></h5>
+                    <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 mb-0 text-muted small">Redirecting to login page...</p>
+                </div>
+
+            <?php else: ?>
+
+                <div class="card shadow-sm border-0 p-4">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label class="form-label text-muted small fw-bold">Username</label>
+                            <input type="text" name="username" class="form-control bg-light" placeholder="Choose a username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-muted small fw-bold">Email</label>
+                            <input type="email" name="email" class="form-control bg-light" placeholder="Enter your email" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label text-muted small fw-bold">Password</label>
+                            <input type="password" name="password" class="form-control bg-light" placeholder="Create a strong password" required>
+                        </div>
+                        <button type="submit" name="register" class="btn btn-success w-100 fw-bold">Register</button>
+                    </form>
+                </div>
+
+                <p class="text-center mt-4 text-muted">
+                    Already have an account? <a href="login.php" class="text-decoration-none fw-bold text-success">Login here</a>
+                </p>
+
             <?php endif; ?>
 
-            <form method="POST">
-                <div class="mb-3">
-                    <input type="text" name="username" class="form-control" placeholder="Username" required>
-                </div>
-                <div class="mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Email" required>
-                </div>
-                <div class="mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password" required>
-                </div>
-                <button type="submit" name="register" class="btn btn-success w-100">Register</button>
-            </form>
-
-            <p class="text-center mt-3">
-                Already have an account? <a href="login.php">Login here</a>
-            </p>
         </div>
     </div>
 </div>

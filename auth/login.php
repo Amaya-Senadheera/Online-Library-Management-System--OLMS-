@@ -44,32 +44,44 @@ if (isset($_POST['login'])) {
 
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h2 class="text-center mb-4">Login to OLMS</h2>
+        <div class="col-md-5"> <h2 class="text-center mb-4 fw-bold">Login to OLMS</h2>
 
             <?php if (isset($error)): ?>
-                <div class="alert alert-danger"><?php echo $error; ?></div>
+                <div class="alert alert-danger shadow-sm border-0"><?php echo $error; ?></div>
             <?php endif; ?>
 
             <?php if (!empty($success_message)): ?>
-                <div class="alert alert-success">
-                    <?php echo $success_message; ?>
+                
+                <div class="alert alert-success text-center shadow-sm p-4 border-0">
+                    <h5 class="mb-3"><?php echo $success_message; ?></h5>
+                    <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 mb-0 text-muted small">Redirecting to your dashboard...</p>
                 </div>
+
+            <?php else: ?>
+                
+                <div class="card shadow-sm border-0 p-4">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label class="form-label text-muted small fw-bold">Username or Email</label>
+                            <input type="text" name="input" class="form-control bg-light" placeholder="Enter your username or email" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label text-muted small fw-bold">Password</label>
+                            <input type="password" name="password" class="form-control bg-light" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" name="login" class="btn btn-primary w-100 fw-bold">Login</button>
+                    </form>
+                </div>
+
+                <p class="text-center mt-4 text-muted">
+                    Don't have an account? <a href="register.php" class="text-decoration-none fw-bold">Register here</a>
+                </p>
+
             <?php endif; ?>
 
-            <form method="POST">
-                <div class="mb-3">
-                    <input type="text" name="input" class="form-control" placeholder="Username or Email" required>
-                </div>
-                <div class="mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Password" required>
-                </div>
-                <button type="submit" name="login" class="btn btn-primary w-100">Login</button>
-            </form>
-
-            <p class="text-center mt-3">
-                Don't have an account? <a href="register.php">Register here</a>
-            </p>
         </div>
     </div>
 </div>

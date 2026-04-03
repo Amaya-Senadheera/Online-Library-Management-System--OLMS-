@@ -1,5 +1,5 @@
-<?php 
-include '../includes/header.php'; 
+<?php
+include '../includes/header.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'member') {
     header("Location: ../auth/login.php");
@@ -24,18 +24,18 @@ $current_reads_sql = "SELECT t.*, b.title, b.author, b.cover_image
                       ORDER BY t.due_date ASC"; // Sorted by closest due date first
 $current_reads = mysqli_query($conn, $current_reads_sql);
 
-$overdue_count = 0; 
+$overdue_count = 0;
 $current_books_data = [];
 $has_overdue = false;
 
-while($row = mysqli_fetch_assoc($current_reads)) {
+while ($row = mysqli_fetch_assoc($current_reads)) {
     $due_date = new DateTime($row['due_date']);
-    $today = new DateTime(); 
+    $today = new DateTime();
     $row['is_overdue'] = false;
-    
+
     // Calculate difference
     $interval = $today->diff($due_date);
-    $days_diff = (int)$interval->format("%r%a"); // Positive if in future, negative if past
+    $days_diff = (int) $interval->format("%r%a"); // Positive if in future, negative if past
 
     if ($days_diff < 0) {
         $row['is_overdue'] = true;
@@ -45,8 +45,8 @@ while($row = mysqli_fetch_assoc($current_reads)) {
     } else {
         $row['days_left'] = $days_diff;
     }
-    
-    $current_books_data[] = $row; 
+
+    $current_books_data[] = $row;
 }
 
 // --- 3. READING HISTORY ---
@@ -58,8 +58,22 @@ $history_sql = "SELECT t.*, b.title, b.author, b.cover_image
 $history_reads = mysqli_query($conn, $history_sql);
 ?>
 
-<div class="container my-5">
-    <div class="p-4 mb-4 rounded-4 shadow-sm hero-faded text-white d-flex justify-content-between align-items-center" style="background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('../assets/images/hero-bg.jpg'); background-size: cover;">
+<style>
+    .hover-link:hover {
+        text-decoration: underline !important;
+    }
+</style>
+
+<div class="container mt-2 mb-5">
+
+    <div class="mb-3">
+        <a href="../index.php" class="text-decoration-none text-muted fw-bold hover-link">
+            <i class="bi bi-arrow-left me-2"></i>Back to Homepage
+        </a>
+    </div>
+
+    <div class="p-4 mb-4 rounded-4 shadow-sm hero-faded text-white d-flex justify-content-between align-items-center"
+        style="background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('../assets/images/hero-bg.jpg'); background-size: cover;">
         <div>
             <h2 class="fw-bold text-white">Welcome Back, <?php echo htmlspecialchars($username); ?>! 👋</h2>
             <p class="lead mb-0 text-white">Track your reading time and history.</p>
@@ -97,10 +111,16 @@ $history_reads = mysqli_query($conn, $history_sql);
     <div class="row">
         <div class="col-md-3 mb-4">
             <div class="list-group shadow-sm border-0">
-                <a href="dashboard.php" class="list-group-item list-group-item-action active border-0"><i class="bi bi-grid-fill me-2"></i> My Dashboard</a>
-                <a href="profile.php" class="list-group-item list-group-item-action border-0"><i class="bi bi-person-circle me-2"></i> My Profile</a>
-                <a href="../catalog/books.php" class="list-group-item list-group-item-action border-0"><i class="bi bi-search me-2"></i> Browse Books</a>
-                <a href="../auth/logout.php" class="list-group-item list-group-item-action text-danger border-0"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+                <a href="dashboard.php" class="list-group-item list-group-item-action active border-0"><i
+                        class="bi bi-grid-fill me-2"></i> My Dashboard</a>
+                <a href="profile.php" class="list-group-item list-group-item-action border-0"><i
+                        class="bi bi-person-circle me-2"></i> My Profile</a>
+                <a href="../catalog/books.php" class="list-group-item list-group-item-action border-0"><i
+                        class="bi bi-search me-2"></i> Browse Books</a>
+                <a href="../operations/index.php" class="list-group-item list-group-item-action border-0"><i
+                        class="bi bi-arrow-left-right me-2"></i> Borrow & Return</a>
+                <a href="../auth/logout.php" class="list-group-item list-group-item-action text-danger border-0"><i
+                        class="bi bi-box-arrow-right me-2"></i> Logout</a>
             </div>
         </div>
 
@@ -122,7 +142,7 @@ $history_reads = mysqli_query($conn, $history_sql);
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($current_books_data as $book): ?>
+                                    <?php foreach ($current_books_data as $book): ?>
                                         <tr>
                                             <td>
                                                 <div class="d-flex align-items-center">
@@ -130,10 +150,14 @@ $history_reads = mysqli_query($conn, $history_sql);
                                                     $cover = $book['cover_image'];
                                                     $image_path = (filter_var($cover, FILTER_VALIDATE_URL)) ? $cover : "../assets/images/" . $cover;
                                                     ?>
-                                                    <img src="<?php echo $image_path; ?>" width="45" class="rounded shadow-sm me-3" style="height: 60px; object-fit: cover;" onerror="this.src='../assets/images/default-cover.jpg';">
+                                                    <img src="<?php echo $image_path; ?>" width="45"
+                                                        class="rounded shadow-sm me-3" style="height: 60px; object-fit: cover;"
+                                                        onerror="this.src='../assets/images/default-cover.jpg';">
                                                     <div>
-                                                        <div class="fw-bold text-dark"><?php echo htmlspecialchars($book['title']); ?></div>
-                                                        <small class="text-muted"><?php echo htmlspecialchars($book['author']); ?></small>
+                                                        <div class="fw-bold text-dark">
+                                                            <?php echo htmlspecialchars($book['title']); ?></div>
+                                                        <small
+                                                            class="text-muted"><?php echo htmlspecialchars($book['author']); ?></small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -184,14 +208,16 @@ $history_reads = mysqli_query($conn, $history_sql);
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php while($row = mysqli_fetch_assoc($history_reads)): ?>
+                                    <?php while ($row = mysqli_fetch_assoc($history_reads)): ?>
                                         <tr>
                                             <td>
-                                                <div class="fw-bold text-dark"><?php echo htmlspecialchars($row['title']); ?></div>
+                                                <div class="fw-bold text-dark"><?php echo htmlspecialchars($row['title']); ?>
+                                                </div>
                                                 <small><?php echo htmlspecialchars($row['author']); ?></small>
                                             </td>
                                             <td><?php echo date('M d, Y', strtotime($row['borrow_date'])); ?></td>
-                                            <td class="text-success fw-semibold"><i class="bi bi-check-circle-fill me-1"></i> <?php echo date('M d, Y', strtotime($row['returned_date'])); ?></td>
+                                            <td class="text-success fw-semibold"><i class="bi bi-check-circle-fill me-1"></i>
+                                                <?php echo date('M d, Y', strtotime($row['returned_date'])); ?></td>
                                         </tr>
                                     <?php endwhile; ?>
                                 </tbody>

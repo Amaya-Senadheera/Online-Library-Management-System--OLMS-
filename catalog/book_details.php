@@ -155,12 +155,13 @@ $review_count = $avg_data['review_count'] ?? 0;
                             <p class="small text-danger">Please note: You will have 14 days to return it.</p>
                         </div>
                         <div class="modal-footer justify-content-center bg-light">
-                            <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">No,
-                                Cancel</button>
                             <form action="../operations/borrow_action.php" method="POST" class="m-0">
                                 <input type="hidden" name="book_id" value="<?php echo $book['id']; ?>">
                                 <button type="submit" class="btn btn-success px-4 fw-bold">Yes, Borrow Book</button>
                             </form>
+                            <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">No,
+                                Cancel
+                            </button>
                         </div>
                     </div>
                 </div>
