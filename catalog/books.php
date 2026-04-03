@@ -30,7 +30,7 @@ $cat_result = $conn->query($cat_sql);
 <div class="container my-4">
     <!-- Hero / Welcome Section -->
     <div class="bg-primary text-white rounded-4 p-5 mb-5 shadow">
-        <h1 class="display-4 fw-bold">📚 Discover Your Next Read</h1>
+        <h1 class="display-4 fw-bold">Discover Your Next Read</h1>
         <p class="lead">Browse our collection of thousands of books. Find, borrow, and enjoy!</p>
     </div>
 

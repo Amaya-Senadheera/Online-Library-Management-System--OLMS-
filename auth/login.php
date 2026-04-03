@@ -1,5 +1,5 @@
 <?php 
-include '../includes/db.php'; 
+//include '../includes/db.php'; 
 include '../includes/header.php'; 
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -30,7 +30,7 @@ if (isset($_POST['login'])) {
             $success_message = "✅ Login successful! Welcome, " . htmlspecialchars($user['username']) . "!";
 
             // Auto redirect after 2 seconds
-            $redirect_url = ($user['role'] == 'admin') ? "../admin/admin_index.php" : "../core/dashboard.php";
+            $redirect_url = ($user['role'] == 'admin') ? "../admin/admin_index.php" : "../index.php";
             echo "<meta http-equiv='refresh' content='2;url=$redirect_url'>";
 
         } else {
