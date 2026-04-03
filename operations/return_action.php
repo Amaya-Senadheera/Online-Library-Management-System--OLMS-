@@ -15,7 +15,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['transaction_id'])) {
-    $transaction_id = (int)$_POST['transaction_id'];
+    $transaction_id = (int) $_POST['transaction_id'];
     $user_id = $_SESSION['user_id'];
 
     // Check if transaction exists and belongs to user and is active
@@ -43,7 +43,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['transaction_id'])) {
     }
 
     // Redirect back to dashboard
-    header("Location: ../core/dashboard.php");
+    // --- PASTE THIS AT THE BOTTOM OF return_action.php ---
+
+    // Check where the user came from (the Referer)
+    $back_to = $_SERVER['HTTP_REFERER'] ?? '../index.php';
+
+    // Redirect them back to EXACTLY where they clicked the button
+    header("Location: " . $back_to);
     exit();
 } else {
     // Invalid request
