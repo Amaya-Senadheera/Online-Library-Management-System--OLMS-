@@ -8,20 +8,23 @@ if (isset($_POST['register'])) {
     $email    = mysqli_real_escape_string($conn, $_POST['email']);
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Check if email exists
-    $check = "SELECT * FROM users WHERE email='$email'";
+    // Check if email or username already exists
+    $check = "SELECT * FROM users WHERE email='$email' OR username='$username'";
     $result = mysqli_query($conn, $check);
 
     if (mysqli_num_rows($result) > 0) {
-        $error = "Email already exists!";
+        $error = "Username or Email already exists!";
     } else {
         $query = "INSERT INTO users (username, email, password, role) 
                   VALUES ('$username', '$email', '$password', 'member')";
 
         if (mysqli_query($conn, $query)) {
-            $success = "Registration successful! You can now login.";
+            $success = "Registration successful! Redirecting to login...";
+            
+            // Redirect to login page after 2 seconds
+            echo "<meta http-equiv='refresh' content='2;url=login.php'>";
         } else {
-            $error = "Registration failed!";
+            $error = "Registration failed! Please try again.";
         }
     }
 }
@@ -32,8 +35,13 @@ if (isset($_POST['register'])) {
         <div class="col-md-6">
             <h2 class="text-center mb-4">Register New Account</h2>
 
-            <?php if (isset($error)) echo "<div class='alert alert-danger'>$error</div>"; ?>
-            <?php if (isset($success)) echo "<div class='alert alert-success'>$success</div>"; ?>
+            <?php if (isset($error)): ?>
+                <div class="alert alert-danger"><?php echo $error; ?></div>
+            <?php endif; ?>
+
+            <?php if (isset($success)): ?>
+                <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php endif; ?>
 
             <form method="POST">
                 <div class="mb-3">
