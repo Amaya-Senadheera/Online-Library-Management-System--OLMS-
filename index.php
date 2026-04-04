@@ -25,9 +25,9 @@ while ($row = mysqli_fetch_assoc($latest_books_query)) {
         position: relative;
         padding: 0 45px;
         max-width: 1050px;
-        /* NEW: Shrinks track width to fit exactly 4 books */
+        /* Shrinks track width to fit exactly 4 books */
         margin: 0 auto;
-        /* NEW: Centers the track perfectly on the screen */
+        /* Centers the track perfectly on the screen */
     }
 
     /* The Scrollable Track */
@@ -47,7 +47,7 @@ while ($row = mysqli_fetch_assoc($latest_books_query)) {
         display: none;
     }
 
-    /* Navigation Arrows */
+    /* 🟢 Navigation Arrows (Updated to Vintage Red-Brown) 🟢 */
     .carousel-btn {
         position: absolute;
         top: 50%;
@@ -56,15 +56,15 @@ while ($row = mysqli_fetch_assoc($latest_books_query)) {
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background-color: #0d6efd;
+        background-color: #8C3A35; /* Vintage Red-Brown */
         color: white;
         border: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 8px rgba(28, 17, 10, 0.3);
         transition: all 0.2s;
     }
 
     .carousel-btn:hover {
-        background-color: #0b5ed7;
+        background-color: #6E2D29; /* Darker Red-Brown */
         transform: translateY(-50%) scale(1.1);
     }
 
@@ -79,11 +79,11 @@ while ($row = mysqli_fetch_assoc($latest_books_query)) {
     .book-card-custom {
         width: 220px;
         min-width: 220px;
-        /* NEW: Forces card to NEVER squish */
+        /* Forces card to NEVER squish */
         max-width: 220px;
-        /* NEW: Forces card to NEVER stretch */
+        /* Forces card to NEVER stretch */
         flex: 0 0 auto;
-        /* NEW: Locks the card size to be perfectly constant */
+        /* Locks the card size to be perfectly constant */
         white-space: normal;
     }
 
@@ -103,12 +103,12 @@ while ($row = mysqli_fetch_assoc($latest_books_query)) {
         transform: scale(1.05);
     }
 
-    /* Member 3's Badges */
+    /* 🟢 Badges (Updated to Vintage Olive and Red-Brown) 🟢 */
     .badge-available {
         position: absolute;
         top: 10px;
         right: 10px;
-        background-color: #28a745;
+        background-color: #82a841; /* Vintage Olive */
         color: white;
         padding: 5px 12px;
         border-radius: 20px;
@@ -120,7 +120,7 @@ while ($row = mysqli_fetch_assoc($latest_books_query)) {
         position: absolute;
         top: 10px;
         right: 10px;
-        background-color: #dc3545;
+        background-color: #8C3A35; /* Vintage Red-Brown */
         color: white;
         padding: 5px 12px;
         border-radius: 20px;
@@ -131,10 +131,10 @@ while ($row = mysqli_fetch_assoc($latest_books_query)) {
 /* Refined Dark Cinematic Hero */
     .hero-faded {
         position: relative;
-        background-color: #212529; /* Dark fallback */
+        background-color: #1C110A; /* Dark fallback to match theme */
         /* Smooth dark gradient fading from left to right */
         background-image: 
-            linear-gradient(to right, rgba(15, 23, 42, 0.55) 0%, rgba(15, 23, 42, 0.4) 100%), 
+            linear-gradient(to right, rgba(28, 17, 10, 0.7) 0%, rgba(28, 17, 10, 0.4) 100%), 
             url('assets/images/hero-bg.jpg'); 
         background-size: cover;
         background-position: center;
@@ -164,29 +164,29 @@ while ($row = mysqli_fetch_assoc($latest_books_query)) {
 <div class="row text-center mb-5">
     <div class="col-md-4 mb-3">
         <div class="card shadow-sm border-0 py-4">
-            <h2 class="display-5 fw-bold text-primary"><?php echo $total_books; ?></h2>
+            <h2 class="display-5 fw-bold" style="color: #8C3A35;"><?php echo $total_books; ?></h2>
             <p class="text-muted mb-0 text-uppercase fw-semibold">Total Books</p>
         </div>
     </div>
     <div class="col-md-4 mb-3">
         <div class="card shadow-sm border-0 py-4">
-            <h2 class="display-5 fw-bold text-success"><?php echo $active_members; ?></h2>
+            <h2 class="display-5 fw-bold" style="color: #757A45;"><?php echo $active_members; ?></h2>
             <p class="text-muted mb-0 text-uppercase fw-semibold">Active Members</p>
         </div>
     </div>
     <div class="col-md-4 mb-3">
         <div class="card shadow-sm border-0 py-4">
-            <h2 class="display-5 fw-bold text-warning"><?php echo $borrowed_books; ?></h2>
+            <h2 class="display-5 fw-bold" style="color: #c4b106;"><?php echo $borrowed_books; ?></h2>
             <p class="text-muted mb-0 text-uppercase fw-semibold">Books Borrowed</p>
         </div>
     </div>
 </div>
 
 <div class="mb-5">
-    <h3 class="mb-4 text-center fw-bold">New Arrivals</h3>
+    <h3 class="mb-4 text-center fw-bold text-dark">New Arrivals</h3>
 
     <div class="carousel-wrapper">
-        <button id="btnScrollLeft" class="carousel-btn btn-left">❮</button>
+        <button id="btnScrollLeft" class="carousel-btn btn-left shadow-sm">❮</button>
 
         <div class="scroll-container" id="bookCarousel">
 
@@ -210,9 +210,9 @@ while ($row = mysqli_fetch_assoc($latest_books_query)) {
                             onerror="this.onerror=null; this.src='<?php echo $base_url; ?>assets/images/default-cover.jpg';">
 
                         <?php if ($book['available_qty'] > 0): ?>
-                            <span class="badge-available">Available</span>
+                            <span class="badge-available shadow-sm">Available</span>
                         <?php else: ?>
-                            <span class="badge-unavailable">Borrowed</span>
+                            <span class="badge-unavailable shadow-sm">Borrowed</span>
                         <?php endif; ?>
                     </div>
 
@@ -226,16 +226,16 @@ while ($row = mysqli_fetch_assoc($latest_books_query)) {
                         </p>
 
                         <div class="d-flex justify-content-between align-items-center mb-3 px-1">
-                            <span class="badge bg-info"
+                            <span class="badge bg-info text-dark"
                                 style="font-size: 0.7rem;"><?php echo htmlspecialchars($book['category']); ?></span>
-                            <small class="text-success fw-bold" style="font-size: 0.75rem;">
+                            <small class="fw-bold" style="font-size: 0.75rem; color: #757A45;">
                                 <?php echo $book['available_qty']; ?>/<?php echo $book['total_qty']; ?> left
                             </small>
                         </div>
 
                         <div class="mt-auto">
                             <a href="<?php echo $base_url; ?>catalog/book_details.php?id=<?php echo $book['id']; ?>"
-                                class="btn btn-outline-primary btn-sm w-100">View Details</a>
+                                class="btn btn-outline-primary btn-sm w-100 fw-bold">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -245,7 +245,7 @@ while ($row = mysqli_fetch_assoc($latest_books_query)) {
 
         </div>
 
-        <button id="btnScrollRight" class="carousel-btn btn-right">❯</button>
+        <button id="btnScrollRight" class="carousel-btn btn-right shadow-sm">❯</button>
     </div>
 </div>
 

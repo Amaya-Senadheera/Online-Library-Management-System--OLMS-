@@ -32,9 +32,13 @@ if (isset($_GET['search'])) {
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
-    /* Table row hover */
+    .hover-link:hover {
+        text-decoration: underline !important;
+    }
+
+    /* Table row hover (Vintage Cream to slightly darker Beige) */
     .table-hover tbody tr:hover {
-        background-color: #f8f9fa;
+        background-color: #E9D9B2 !important;
         transition: 0.3s;
     }
 
@@ -44,21 +48,37 @@ if (isset($_GET['search'])) {
     }
 
     .btn-hover:hover {
-        transform: scale(1.05);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(28, 17, 10, 0.2) !important;
     }
 
     /* Image styling */
     .book-img {
-        border-radius: 5px;
+        border-radius: 6px;
         transition: 0.3s;
+        border: 1px solid rgba(176, 138, 91, 0.3);
     }
 
     .book-img:hover {
-        transform: scale(1.1);
+        transform: scale(1.15);
+        box-shadow: 0 5px 15px rgba(28, 17, 10, 0.3);
+    }
+    
+    /* Custom Table Header Color */
+    .vintage-thead th {
+        background-color: #8C3A35 !important;
+        color: white !important;
+        border-bottom: 2px solid #6E2D29 !important;
     }
 </style>
 
-<div class="container mt-4">
+<div class="container mt-4 mb-5">
+
+    <div class="mb-4">
+        <a href="admin_index.php" class="text-decoration-none fw-bold hover-link" style="color: #8C3A35;">
+            <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+        </a>
+    </div>
 
     <?php if (isset($_SESSION['success'])): ?>
         <script>
@@ -67,113 +87,110 @@ if (isset($_GET['search'])) {
                     title: 'Success!', 
                     text: '<?= htmlspecialchars($_SESSION['success']) ?>', 
                     icon: 'success', 
-                    confirmButtonColor: '#198754' 
+                    confirmButtonColor: '#82a841' // 🟢 Sage Green
                 });
             });
         </script>
-        <?php unset($_SESSION['success']); // Clear it so it doesn't show again on refresh ?>
+        <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="text-center flex-grow-1 fw-bold" style="color: #4e73df;">
-            Manage Books
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+        <h3 class="m-0 fw-bold" style="color: #1C110A;">
+            <i class="bi bi-journals me-2" style="color: #8C3A35;"></i>Manage Books
         </h3>
+        
+        <a href="add_books.php" class="btn btn-hover fw-bold text-white shadow-sm rounded-pill px-4" style="background-color: #82a841; border: none;">
+            <i class="bi bi-plus-circle me-1"></i> Add Book
+        </a>
     </div>
 
-    <a href="add_books.php" class="btn btn-success btn-hover mb-3">
-        Add Book
-    </a>
+    <form method="GET" class="mb-4">
+        <div class="input-group shadow-sm rounded-pill overflow-hidden" style="border: 1px solid rgba(176, 138, 91, 0.4);">
+            <input type="text" name="search" class="form-control border-0 px-4 bg-white" placeholder="🔍 Search by title or author..."
+                value="<?= htmlspecialchars($search) ?>">
+            <button class="btn fw-bold px-4 text-white" style="background-color: #8C3A35; border: none;">Search</button>
+        </div>
+    </form>
 
     <?php if(!empty($search)): ?>
     <div class="mb-3">
-        <a href="manage_books.php" class="btn btn-secondary btn-sm">
-            🔙 Back to Full Book List
+        <a href="manage_books.php" class="btn btn-light border fw-bold text-muted rounded-pill shadow-sm btn-hover">
+            <i class="bi bi-arrow-counterclockwise me-1"></i> Clear Search
         </a>
     </div>
     <?php endif; ?>
 
-    <form method="GET" class="mb-3">
-        <div class="input-group shadow-sm">
-            <input type="text" name="search" class="form-control" placeholder="🔍 Search by title or author..."
-                value="<?= htmlspecialchars($search) ?>">
-            <button class="btn btn-primary">Search</button>
-        </div>
-    </form>
-
     <?php if($result->num_rows == 0): ?>
-        <div class="alert alert-warning text-center mt-3 shadow-sm border-0">
-            No books found! This book is not in the library.
+        <div class="alert text-center mt-3 shadow-sm border-0 rounded-4 p-4" style="background-color: #FDFBF7;">
+            <i class="bi bi-search" style="font-size: 2rem; color: #B08A5B;"></i>
+            <h5 class="fw-bold mt-2 text-dark">No books found!</h5>
+            <p class="text-muted mb-0">Try adjusting your search terms.</p>
         </div>
     <?php else: ?>
 
-    <div class="card shadow p-3 border-0 rounded-4">
+    <div class="card shadow-sm p-3 border-0 rounded-4" style="background-color: #FDFBF7;">
         <div class="table-responsive">
-
-            <table class="table table-hover table-bordered text-center align-middle">
-
-                <thead class="table-dark">
+            <table class="table table-hover align-middle mb-0" style="background-color: transparent;">
+                <thead class="vintage-thead text-center">
                     <tr>
-                        <th>ID</th>
+                        <th class="rounded-start">ID</th>
                         <th>Cover</th>
                         <th>Title</th>
                         <th>Author</th>
                         <th>Category</th>
                         <th>Total</th>
                         <th>Available</th>
-                        <th>Actions</th>
+                        <th class="rounded-end">Actions</th>
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody class="text-center" style="border-top: none;">
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
-                            <td class="fw-bold text-muted"><?= $row['id'] ?></td>
+                            <td class="fw-bold text-muted">#<?= $row['id'] ?></td>
 
                             <td>
                                 <?php
                                 $cover = $row['cover_image'];
-                                // If it's a valid web URL, use it directly
                                 if (filter_var($cover, FILTER_VALIDATE_URL)) {
                                     $image_path = $cover;
                                 } else {
-                                    // Local filename pointing to the correct assets folder
                                     $image_path = "../assets/images/" . $cover;
                                 }
                                 ?>
                                 <img src="<?= $image_path ?>" 
                                     width="50" height="70" 
-                                    class="book-img shadow-sm rounded"
+                                    class="book-img shadow-sm"
                                     style="object-fit: cover;"
                                     onerror="this.onerror=null; this.src='../assets/images/default-cover.jpg';">
                             </td>
 
-                            <td class="fw-bold"><?= htmlspecialchars($row['title']) ?></td>
-                            <td><?= htmlspecialchars($row['author']) ?></td>
-                            <td><span class="badge bg-light text-dark border"><?= htmlspecialchars($row['category']) ?></span></td>
-                            <td><?= $row['total_qty'] ?></td>
-                            <td class="fw-bold <?= ($row['available_qty'] > 0) ? 'text-success' : 'text-danger' ?>">
+                            <td class="fw-bold text-dark text-start"><?= htmlspecialchars($row['title']) ?></td>
+                            <td class="text-muted"><?= htmlspecialchars($row['author']) ?></td>
+                            <td><span class="badge shadow-sm" style="background-color: rgba(176, 138, 91, 0.15); color: #8C3A35;"><?= htmlspecialchars($row['category']) ?></span></td>
+                            <td class="fw-semibold"><?= $row['total_qty'] ?></td>
+                            
+                            <td class="fw-bold" style="color: <?= ($row['available_qty'] > 0) ? '#82a841' : '#8C3A35' ?>;">
                                 <?= $row['available_qty'] ?>
                             </td>
 
                             <td>
-                                <a href="edit_book.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm btn-hover fw-bold shadow-sm">
-                                    ✏️ Edit
+                                <a href="edit_book.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-hover fw-bold shadow-sm text-white mb-1 mb-md-0" style="background-color: #82a841; border: none;">
+                                    <i class="bi bi-pencil-square"></i> Edit
                                 </a>
 
                                 <form method="POST" id="deleteForm_<?= $row['id'] ?>" style="display:inline;">
                                     <input type="hidden" name="delete_id" value="<?= $row['id'] ?>">
                                     <button type="button" class="btn btn-danger btn-sm btn-hover fw-bold shadow-sm"
                                         onclick="confirmDelete(<?= $row['id'] ?>, '<?= addslashes(htmlspecialchars($row['title'])) ?>')">
-                                        🗑 Delete
+                                        <i class="bi bi-trash3"></i> Delete
                                     </button>
                                 </form>
                             </td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
-
             </table>
-
         </div>
     </div>
     <?php endif; ?>
@@ -187,7 +204,7 @@ function confirmDelete(bookId, bookTitle) {
         text: "You won't be able to revert this! All associated data might be lost.",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#dc3545',
+        confirmButtonColor: '#aa2734', // Standard Danger Red
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {

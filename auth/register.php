@@ -31,46 +31,55 @@ if (isset($_POST['register'])) {
 }
 ?>
 
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <div class="row justify-content-center">
-        <div class="col-md-5"> <h2 class="text-center mb-4 fw-bold">Register New Account</h2>
+        <div class="col-md-5"> 
+            <h2 class="text-center mb-4 fw-bold" style="color: #1C110A;">Register New Account</h2>
 
             <?php if (isset($error)): ?>
-                <div class="alert alert-danger shadow-sm border-0"><?php echo $error; ?></div>
+                <div class="alert shadow-sm border-0 fw-bold" style="background-color: rgba(140, 58, 53, 0.1); color: #8C3A35; border-left: 4px solid #8C3A35 !important;">
+                    <i class="bi bi-exclamation-circle-fill me-2"></i> <?php echo $error; ?>
+                </div>
             <?php endif; ?>
 
             <?php if (isset($success)): ?>
-                
-                <div class="alert alert-success text-center shadow-sm p-4 border-0">
-                    <h5 class="mb-3"><?php echo $success; ?></h5>
-                    <div class="spinner-border text-success" role="status">
+                <div class="alert text-center shadow-sm p-4 border-0" style="background-color: rgba(130, 168, 65, 0.15); color: #4a6322; border: 1px solid rgba(130, 168, 65, 0.3) !important;">
+                    <h5 class="mb-3 fw-bold"><?php echo $success; ?></h5>
+                    <div class="spinner-border" style="color: #82a841;" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
-                    <p class="mt-2 mb-0 text-muted small">Redirecting to login page...</p>
+                    <p class="mt-2 mb-0 small" style="color: #757A45;">Redirecting to login page...</p>
                 </div>
 
             <?php else: ?>
 
-                <div class="card shadow-sm border-0 p-4">
+                <div class="card shadow-sm border-0 p-4 rounded-4" style="background-color: #FDFBF7;">
                     <form method="POST">
                         <div class="mb-3">
                             <label class="form-label text-muted small fw-bold">Username</label>
-                            <input type="text" name="username" class="form-control bg-light" placeholder="Choose a username" required>
+                            <input type="text" name="username" class="form-control border-0 shadow-sm" style="background-color: #ffffff;" placeholder="Choose a username" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label text-muted small fw-bold">Email</label>
-                            <input type="email" name="email" class="form-control bg-light" placeholder="Enter your email" required>
+                            <input type="email" name="email" class="form-control border-0 shadow-sm" style="background-color: #ffffff;" placeholder="Enter your email" required>
                         </div>
+                        
                         <div class="mb-4">
                             <label class="form-label text-muted small fw-bold">Password</label>
-                            <input type="password" name="password" class="form-control bg-light" placeholder="Create a strong password" required>
+                            <div class="input-group shadow-sm bg-white" style="border-radius: 12px; overflow: hidden;">
+                                <input type="password" name="password" id="registerPassword" class="form-control border-0 bg-transparent" placeholder="Create a strong password" required>
+                                <button class="btn border-0" type="button" id="togglePassword" style="color: #8C3A35;">
+                                    <i class="bi bi-eye" id="toggleIcon"></i>
+                                </button>
+                            </div>
                         </div>
-                        <button type="submit" name="register" class="btn btn-success w-100 fw-bold">Register</button>
+
+                        <button type="submit" name="register" class="btn w-100 fw-bold py-2 shadow-sm rounded-pill text-white" style="background-color: #82a841; border: none;">Register</button>
                     </form>
                 </div>
 
                 <p class="text-center mt-4 text-muted">
-                    Already have an account? <a href="login.php" class="text-decoration-none fw-bold text-success">Login here</a>
+                    Already have an account? <a href="login.php" class="text-decoration-none fw-bold" style="color: #8C3A35;">Login here</a>
                 </p>
 
             <?php endif; ?>
@@ -78,5 +87,25 @@ if (isset($_POST['register'])) {
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordField = document.getElementById("registerPassword");
+    const toggleIcon = document.getElementById("toggleIcon");
+
+    if (togglePassword && passwordField) {
+        togglePassword.addEventListener("click", function () {
+            // Toggle the type attribute
+            const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+            passwordField.setAttribute("type", type);
+            
+            // Toggle the eye / eye-slash icon
+            toggleIcon.classList.toggle("bi-eye");
+            toggleIcon.classList.toggle("bi-eye-slash");
+        });
+    }
+});
+</script>
 
 <?php include '../includes/footer.php'; ?>

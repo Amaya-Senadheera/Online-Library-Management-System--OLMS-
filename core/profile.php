@@ -141,15 +141,23 @@ $reviews_result = $conn->query($reviews_sql);
         transition: color 0.2s;
     }
 
+    /* 🟢 Changed star hover color to Antique Gold 🟢 */
     .star-rating label:hover,
     .star-rating label:hover~label,
     .star-rating input:checked~label {
-        color: #ffc107;
+        color: #D4AF37;
     }
 
     /* Link hover effect */
     .hover-link:hover {
         text-decoration: underline !important;
+    }
+
+    /* Sidebar Active State */
+    .list-group-item.active {
+        background-color: #8C3A35 !important;
+        border-color: #8C3A35 !important;
+        color: white !important;
     }
 </style>
 
@@ -164,7 +172,7 @@ $reviews_result = $conn->query($reviews_sql);
     <?php if (isset($_SESSION['success'])): ?>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
-                Swal.fire({ title: 'Success!', text: '<?php echo $_SESSION['success']; ?>', icon: 'success', confirmButtonColor: '#198754' });
+                Swal.fire({ title: 'Success!', text: '<?php echo $_SESSION['success']; ?>', icon: 'success', confirmButtonColor: '#82a841' });
             });
         </script>
         <?php unset($_SESSION['success']); ?>
@@ -173,21 +181,21 @@ $reviews_result = $conn->query($reviews_sql);
     <?php if (isset($_SESSION['error'])): ?>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
-                Swal.fire({ title: 'Oops...', text: '<?php echo $_SESSION['error']; ?>', icon: 'error', confirmButtonColor: '#dc3545' });
+                Swal.fire({ title: 'Oops...', text: '<?php echo $_SESSION['error']; ?>', icon: 'error', confirmButtonColor: '#8C3A35' });
             });
         </script>
         <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
 
     <div class="p-4 mb-4 rounded-4 shadow-sm hero-faded text-white d-flex justify-content-between align-items-center"
-        style="background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('../assets/images/hero-bg.jpg'); background-size: cover;">
+        style="background-image: linear-gradient(rgba(28, 17, 10, 0.8), rgba(28, 17, 10, 0.8)), url('../assets/images/hero-bg.jpg'); background-size: cover; background-position: center;">
         <div class="d-flex align-items-center">
-            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center shadow"
-                style="width: 70px; height: 70px; border: 3px solid rgba(255,255,255,0.2);">
+            <div class="rounded-circle d-flex align-items-center justify-content-center shadow"
+                style="width: 70px; height: 70px; border: 3px solid rgba(255,255,255,0.2); background-color: #8C3A35;">
                 <i class="bi bi-person text-white display-5"></i>
             </div>
             <div class="ms-3">
-                <h2 class="fw-bold mb-0">My Profile</h2>
+                <h2 class="fw-bold mb-0 text-white">My Profile</h2>
                 <p class="mb-0 text-white-50">Member since
                     <?php echo date('F Y', strtotime($user_data['created_at'])); ?>
                 </p>
@@ -216,12 +224,12 @@ $reviews_result = $conn->query($reviews_sql);
                         Current Details</h6>
                     <div class="mb-3">
                         <small class="text-muted d-block">Username</small>
-                        <span class="fw-bold text-dark"><i class="bi bi-person-badge text-primary me-2"></i>
+                        <span class="fw-bold text-dark"><i class="bi bi-person-badge me-2" style="color: #8C3A35;"></i>
                             <?php echo htmlspecialchars($user_data['username']); ?></span>
                     </div>
                     <div class="mb-3">
                         <small class="text-muted d-block">Email Address</small>
-                        <span class="fw-bold text-dark"><i class="bi bi-envelope-at text-primary me-2"></i>
+                        <span class="fw-bold text-dark"><i class="bi bi-envelope-at me-2" style="color: #8C3A35;"></i>
                             <?php echo htmlspecialchars($user_data['email']); ?></span>
                     </div>
 
@@ -243,7 +251,8 @@ $reviews_result = $conn->query($reviews_sql);
 
             <div class="card shadow-sm border-0 mb-4">
                 <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
-                    <h5 class="fw-bold"><i class="bi bi-person-gear text-primary me-2"></i> Edit Account Details</h5>
+                    <h5 class="fw-bold"><i class="bi bi-person-gear me-2" style="color: #8C3A35;"></i> Edit Account
+                        Details</h5>
                 </div>
                 <div class="card-body">
                     <form action="" method="POST" class="row">
@@ -263,7 +272,8 @@ $reviews_result = $conn->query($reviews_sql);
 
                         <div class="col-12 text-end mt-2">
                             <button type="submit" name="update_profile"
-                                class="btn btn-primary px-5 rounded-pill fw-bold shadow-sm w-100 w-md-auto">
+                                class="btn px-5 rounded-pill fw-bold shadow-sm w-100 w-md-auto text-white"
+                                style="background-color: #82a841; border: none;">
                                 Save Changes
                             </button>
                         </div>
@@ -274,7 +284,7 @@ $reviews_result = $conn->query($reviews_sql);
             <div class="card shadow-sm border-0 mb-5">
                 <div
                     class="card-header bg-white border-bottom-0 pt-4 pb-0 d-flex justify-content-between align-items-center">
-                    <h5 class="fw-bold"><i class="bi bi-star-fill text-warning me-2"></i> My Reviews</h5>
+                    <h5 class="fw-bold"><i class="bi bi-star-fill me-2" style="color: #D4AF37;"></i> My Reviews</h5>
                     <span class="badge bg-light text-dark border"><?php echo $reviews_result->num_rows; ?> total</span>
                 </div>
                 <div class="card-body">
@@ -295,8 +305,8 @@ $reviews_result = $conn->query($reviews_sql);
                                                 <h6 class="fw-bold mb-1"><?php echo htmlspecialchars($review['title']); ?></h6>
                                                 <div class="mb-2">
                                                     <?php for ($i = 1; $i <= 5; $i++): ?>
-                                                        <i class="bi bi-star-fill text-warning"
-                                                            style="<?php echo $i <= $review['rating'] ? '' : 'opacity: 0.3;'; ?>"></i>
+                                                        <i class="bi bi-star-fill"
+                                                            style="<?php echo $i <= $review['rating'] ? 'color: #D4AF37;' : 'color: #ddd;'; ?>"></i>
                                                     <?php endfor; ?>
                                                     <small
                                                         class="text-muted ms-2"><?php echo date('M d, Y', strtotime($review['created_at'])); ?></small>
@@ -317,9 +327,10 @@ $reviews_result = $conn->query($reviews_sql);
 
                                             <ul class="dropdown-menu dropdown-menu-end shadow border-0 py-2">
                                                 <li>
-                                                    <button class="dropdown-item text-primary fw-bold small" type="button"
+                                                    <button class="dropdown-item fw-bold small text-dark" type="button"
                                                         onclick="openEditModal(<?php echo $review['id']; ?>, <?php echo $review['rating']; ?>, '<?php echo addslashes(htmlspecialchars($review['comment'])); ?>', '<?php echo addslashes(htmlspecialchars($review['title'])); ?>')">
-                                                        <i class="bi bi-pencil-square me-2"></i> Edit Review
+                                                        <i class="bi bi-pencil-square me-2" style="color: #8C3A35;"></i> Edit
+                                                        Review
                                                     </button>
                                                 </li>
                                                 <li>
@@ -355,28 +366,30 @@ $reviews_result = $conn->query($reviews_sql);
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content shadow-lg border-0">
             <form action="" method="POST">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title fw-bold"><i class="bi bi-shield-lock me-2"></i>Change Password</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <div class="modal-header border-0" style="background-color: #E9D9B2;">
+                    <h5 class="modal-title fw-bold text-dark"><i class="bi bi-shield-lock me-2"
+                            style="color: #8C3A35;"></i>Change Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-4">
+                <div class="modal-body p-4 bg-white">
                     <p class="text-muted small mb-4">Ensure your new password is at least 6 characters long.</p>
                     <div class="mb-3">
                         <label class="form-label fw-bold text-muted small">New Password</label>
-                        <input type="password" name="new_password" class="form-control bg-light"
+                        <input type="password" name="new_password" class="form-control bg-light border-0 shadow-sm"
                             placeholder="Enter new password" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-bold text-muted small">Confirm New Password</label>
-                        <input type="password" name="confirm_password" class="form-control bg-light"
+                        <input type="password" name="confirm_password" class="form-control bg-light border-0 shadow-sm"
                             placeholder="Confirm new password" required>
                     </div>
                 </div>
-                <div class="modal-footer bg-light border-0">
-                    <button type="button" class="btn btn-secondary px-4 rounded-pill"
+                <div class="modal-footer bg-white border-0 pt-0">
+                    <button type="button" class="btn btn-secondary px-4 rounded-pill fw-bold"
                         data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" name="update_password"
-                        class="btn btn-danger px-4 rounded-pill fw-bold shadow-sm">Update Password</button>
+                        class="btn px-4 rounded-pill fw-bold shadow-sm text-white"
+                        style="background-color: #82a841; border: none;">Update Password</button>
                 </div>
             </form>
         </div>
@@ -387,11 +400,11 @@ $reviews_result = $conn->query($reviews_sql);
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content shadow-lg border-0">
             <form action="" method="POST">
-                <div class="modal-header bg-light">
-                    <h5 class="modal-title fw-bold" id="editModalTitle">Edit Review</h5>
+                <div class="modal-header border-0" style="background-color: #E9D9B2;">
+                    <h5 class="modal-title fw-bold text-dark" id="editModalTitle">Edit Review</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-4">
+                <div class="modal-body p-4 bg-white">
                     <input type="hidden" name="edit_review_id" id="edit_review_id">
 
                     <div class="mb-4 text-center">
@@ -407,13 +420,15 @@ $reviews_result = $conn->query($reviews_sql);
                     </div>
 
                     <div class="mb-3">
-                        <textarea name="comment" id="edit_comment" class="form-control bg-light border-0" rows="4"
-                            required></textarea>
+                        <textarea name="comment" id="edit_comment" class="form-control bg-light border-0 shadow-sm"
+                            rows="4" required></textarea>
                     </div>
                 </div>
-                <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary px-4 fw-bold">Save Changes</button>
+                <div class="modal-footer border-0 pt-0 bg-white">
+                    <button type="button" class="btn btn-secondary px-4 fw-bold rounded-pill"
+                        data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn px-4 fw-bold rounded-pill text-white shadow-sm"
+                        style="background-color: #82a841; border: none;">Save Changes</button>
                 </div>
             </form>
         </div>
@@ -445,7 +460,7 @@ $reviews_result = $conn->query($reviews_sql);
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#dc3545',
+            confirmButtonColor: '#dc3545', // Kept red for danger
             cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {

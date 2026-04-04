@@ -16,12 +16,13 @@ $book = $result->fetch_assoc();
 // Update
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $title = $_POST['title'];
-    $author = $_POST['author'];
-    $category = $_POST['category'];
-    $cover_image = $_POST['cover_image'];
-    $total_qty = $_POST['total_qty'];
-    $available_qty = $_POST['available_qty'];
+    // Added mysqli_real_escape_string to prevent SQL injection errors on update
+    $title = mysqli_real_escape_string($conn, $_POST['title']);
+    $author = mysqli_real_escape_string($conn, $_POST['author']);
+    $category = mysqli_real_escape_string($conn, $_POST['category']);
+    $cover_image = mysqli_real_escape_string($conn, $_POST['cover_image']);
+    $total_qty = (int)$_POST['total_qty'];
+    $available_qty = (int)$_POST['available_qty'];
 
     $conn->query("UPDATE books SET 
         title='$title',
@@ -33,76 +34,99 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         WHERE id=$id");
 
     header("Location: manage_books.php");
+    exit;
 }
 ?>
 
 <style>
-/* Smooth animation */
+.hover-link:hover {
+    text-decoration: underline !important;
+}
+
 .input-hover {
     transition: all 0.3s ease;
     border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid rgba(176, 138, 91, 0.4); /* 🟢 Subtle Ochre Border */
 }
 
-/* Hover effect */
-.input-hover:hover {
-    transform: scale(1.02);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-}
-
-/* Focus (when typing) */
+/* 🟢 Smooth Red-Brown focus glow instead of jumpy blue zoom 🟢 */
 .input-hover:focus {
-    border-color: #4e73df;
-    box-shadow: 0 0 10px rgba(78, 115, 223, 0.5);
-    transform: scale(1.02);
+    border-color: #8C3A35;
+    box-shadow: 0 0 0 0.25rem rgba(140, 58, 53, 0.25);
+    outline: none;
 }
 </style>
 
-<div class="container mt-4">
+<div class="container mt-4 mb-5">
 
-    <div class="card shadow p-4">
-        <h3 class="mb-4 text-center">Edit Book</h3>
+    <div class="mb-4">
+        <a href="manage_books.php" class="text-decoration-none fw-bold hover-link" style="color: #8C3A35;">
+            <i class="bi bi-arrow-left me-2"></i>Back to Manage Books
+        </a>
+    </div>
+
+    <div class="card shadow-lg border-0 rounded-4 p-4 p-md-5 mx-auto" style="max-width: 800px; background-color: #FDFBF7;">
+        
+        <div class="text-center mb-4">
+            <h3 class="fw-bold" style="color: #1C110A;">
+                <i class="bi bi-pencil-square me-2" style="color: #8C3A35;"></i>Edit Book
+            </h3>
+            <p class="text-muted">Update the details for <strong>"<?php echo htmlspecialchars($book['title']); ?>"</strong>.</p>
+        </div>
 
         <form method="POST">
 
-            <div class="mb-3">
-                <label class="form-label"><b>Book Title</b></label>
-                <input type="text" name="title" class="form-control input-hover" 
-                       value="<?= $book['title'] ?>" required>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold" style="color: #1C110A;">Book Title</label>
+                    <input type="text" name="title" class="form-control input-hover p-2" 
+                           value="<?php echo htmlspecialchars($book['title']); ?>" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold" style="color: #1C110A;">Author</label>
+                    <input type="text" name="author" class="form-control input-hover p-2" 
+                           value="<?php echo htmlspecialchars($book['author']); ?>" required>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label"><b>Author</b></label>
-                <input type="text" name="author" class="form-control input-hover" 
-                       value="<?= $book['author'] ?>" required>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold" style="color: #1C110A;">Category</label>
+                    <input type="text" name="category" class="form-control input-hover p-2" 
+                           value="<?php echo htmlspecialchars($book['category']); ?>">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold" style="color: #1C110A;"><i class="bi bi-link-45deg me-1" style="color: #B08A5B;"></i>Cover Image URL</label>
+                    <input type="text" name="cover_image" class="form-control input-hover p-2" 
+                           value="<?php echo htmlspecialchars($book['cover_image']); ?>">
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label"><b>Category</b></label>
-                <input type="text" name="category" class="form-control input-hover" 
-                       value="<?= $book['category'] ?>">
+            <hr class="text-muted opacity-25 my-4">
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label class="form-label fw-bold" style="color: #1C110A;">Total Quantity</label>
+                    <input type="number" name="total_qty" class="form-control input-hover p-2" 
+                           value="<?php echo $book['total_qty']; ?>" required>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label class="form-label fw-bold" style="color: #1C110A;">Available Quantity</label>
+                    <input type="number" name="available_qty" class="form-control input-hover p-2" 
+                           value="<?php echo $book['available_qty']; ?>" required>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label"><b>Cover Image URL</b></label>
-                <input type="text" name="cover_image" class="form-control input-hover" 
-                       value="<?= $book['cover_image'] ?>">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label"><b>Total Quantity</b></label>
-                <input type="number" name="total_qty" class="form-control input-hover" 
-                       value="<?= $book['total_qty'] ?>" required>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label"><b>Available Quantity</b></label>
-                <input type="number" name="available_qty" class="form-control input-hover" 
-                       value="<?= $book['available_qty'] ?>" required>
-            </div>
-
-            <div class="d-flex justify-content-between">
-                <a href="manage_books.php" class="btn btn-secondary">⬅ Back</a>
-                <button type="submit" class="btn btn-warning">Update Book</button>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <a href="manage_books.php" class="btn btn-light border px-4 fw-bold rounded-pill text-muted shadow-sm">Cancel</a>
+                
+                <button type="submit" class="btn px-5 fw-bold text-white rounded-pill shadow-sm" style="background-color: #82a841; border: none;">
+                    <i class="bi bi-save me-2"></i>Update Book
+                </button>
             </div>
 
         </form>

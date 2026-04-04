@@ -1,5 +1,5 @@
 <?php 
-include('../includes/db.php'); 
+// include('../includes/db.php'); // Assuming db is included in header or already managed
 include('../includes/header.php');
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -49,66 +49,87 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 ?>
 
 <style>
+.hover-link:hover {
+    text-decoration: underline !important;
+}
+
 .input-hover {
     transition: all 0.3s ease;
     border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid rgba(176, 138, 91, 0.4); /* 🟢 Subtle Ochre Border */
 }
 
-.input-hover:hover {
-    transform: scale(1.02);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-}
-
+/* 🟢 Replaced Blue glow with smooth Red-Brown glow 🟢 */
 .input-hover:focus {
-    border-color: #4e73df;
-    box-shadow: 0 0 10px rgba(78, 115, 223, 0.5);
-    transform: scale(1.02);
+    border-color: #8C3A35;
+    box-shadow: 0 0 0 0.25rem rgba(140, 58, 53, 0.25);
+    outline: none;
 }
 </style>
 
-<div class="container mt-4">
-    <div class="card shadow p-4">
-        <h3 class="mb-4 text-center">Add New Book</h3>
+<div class="container mt-4 mb-5">
+
+    <div class="mb-4">
+        <a href="admin_index.php" class="text-decoration-none fw-bold hover-link" style="color: #8C3A35;">
+            <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+        </a>
+    </div>
+
+    <div class="card shadow-lg border-0 rounded-4 p-4 p-md-5 mx-auto" style="max-width: 800px; background-color: #FDFBF7;">
+        
+        <div class="text-center mb-4">
+            <h3 class="fw-bold" style="color: #1C110A;">
+                <i class="bi bi-journal-plus me-2" style="color: #82a841;"></i>Add New Book
+            </h3>
+            <p class="text-muted">Fill in the details below to add a new book to the catalog.</p>
+        </div>
 
         <form method="POST" enctype="multipart/form-data">
 
-            <div class="mb-3">
-                <label class="form-label"><b>Book Title</b></label>
-                <input type="text" name="title" class="form-control input-hover" required>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold" style="color: #1C110A;">Book Title</label>
+                    <input type="text" name="title" class="form-control input-hover p-2" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold" style="color: #1C110A;">Author</label>
+                    <input type="text" name="author" class="form-control input-hover p-2" required>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label"><b>Author</b></label>
-                <input type="text" name="author" class="form-control input-hover" required>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold" style="color: #1C110A;">Category</label>
+                    <input type="text" name="category" class="form-control input-hover p-2" placeholder="e.g., Fiction, Science, Biography">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold" style="color: #1C110A;">Total Quantity</label>
+                    <input type="number" name="total_qty" class="form-control input-hover p-2" min="1" value="1" required>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label"><b>Category</b></label>
-                <input type="text" name="category" class="form-control input-hover">
+            <hr class="text-muted opacity-25 my-4">
+
+            <div class="mb-4">
+                <label class="form-label fw-bold" style="color: #1C110A;"><i class="bi bi-image me-2" style="color: #B08A5B;"></i>Cover Image</label>
+                
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <small class="text-muted d-block mb-1">Option 1: Upload a File</small>
+                        <input type="file" name="cover_file" class="form-control input-hover">
+                    </div>
+                    <div class="col-md-6">
+                        <small class="text-muted d-block mb-1">Option 2: Paste Image URL</small>
+                        <input type="text" name="cover_image" class="form-control input-hover" placeholder="https://example.com/image.jpg">
+                    </div>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label"><b>Cover Image</b></label>
-
-                <!-- Upload File -->
-                <input type="file" name="cover_file" class="form-control input-hover mb-2">
-
-                <!-- OR URL -->
-                <input type="text" name="cover_image" class="form-control input-hover" 
-                       placeholder="Paste image URL here">
-
-                <small class="text-muted">
-                    Upload image (priority) or paste URL
-                </small>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label"><b>Total Quantity</b></label>
-                <input type="number" name="total_qty" class="form-control input-hover" required>
-            </div>
-
-            <button type="submit" class="btn btn-success w-100">
-                Add Book
+            <button type="submit" class="btn w-100 fw-bold py-3 mt-2 shadow-sm rounded-pill text-white" style="background-color: #82a841; border: none;">
+                <i class="bi bi-plus-circle me-2"></i>Add Book to Catalog
             </button>
 
         </form>

@@ -62,6 +62,13 @@ $history_reads = mysqli_query($conn, $history_sql);
     .hover-link:hover {
         text-decoration: underline !important;
     }
+    
+    /* 🟢 Force the active sidebar link to be Vintage Red-Brown 🟢 */
+    .list-group-item.active {
+        background-color: #8C3A35 !important;
+        border-color: #8C3A35 !important;
+        color: white !important;
+    }
 </style>
 
 <div class="container mt-2 mb-5">
@@ -76,7 +83,7 @@ $history_reads = mysqli_query($conn, $history_sql);
         style="background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('../assets/images/hero-bg.jpg'); background-size: cover;">
         <div>
             <h2 class="fw-bold text-white">Welcome Back, <?php echo htmlspecialchars($username); ?>! 👋</h2>
-            <p class="lead mb-0 text-white">Track your reading time and history.</p>
+            <p class="lead mb-0 text-white-50">Track your reading time and history.</p>
         </div>
         <div>
             <a href="profile.php" class="btn btn-outline-light rounded-pill px-4 shadow-sm fw-bold text-white">
@@ -88,19 +95,19 @@ $history_reads = mysqli_query($conn, $history_sql);
     <div class="row text-center mb-4">
         <div class="col-md-4 mb-3">
             <div class="card shadow-sm border-0 py-3">
-                <h3 class="display-6 fw-bold text-primary"><?php echo $total_read; ?></h3>
+                <h3 class="display-6 fw-bold" style="color: #8C3A35;"><?php echo $total_read; ?></h3>
                 <p class="text-muted mb-0 fw-semibold text-uppercase" style="font-size: 0.85rem;">Total Books Read</p>
             </div>
         </div>
         <div class="col-md-4 mb-3">
             <div class="card shadow-sm border-0 py-3">
-                <h3 class="display-6 fw-bold text-success"><?php echo $total_pending; ?></h3>
+                <h3 class="display-6 fw-bold" style="color: #757A45;"><?php echo $total_pending; ?></h3>
                 <p class="text-muted mb-0 fw-semibold text-uppercase" style="font-size: 0.85rem;">Currently Borrowed</p>
             </div>
         </div>
         <div class="col-md-4 mb-3">
             <div class="card shadow-sm border-0 py-3">
-                <h3 class="display-6 fw-bold <?php echo ($overdue_count > 0) ? 'text-danger' : 'text-secondary'; ?>">
+                <h3 class="display-6 fw-bold" style="color: <?php echo ($overdue_count > 0) ? '#8C3A35' : '#6c757d'; ?>;">
                     <?php echo $overdue_count; ?>
                 </h3>
                 <p class="text-muted mb-0 fw-semibold text-uppercase" style="font-size: 0.85rem;">Overdue Books</p>
@@ -119,7 +126,7 @@ $history_reads = mysqli_query($conn, $history_sql);
                         class="bi bi-search me-2"></i> Browse Books</a>
                 <a href="../operations/index.php" class="list-group-item list-group-item-action border-0"><i
                         class="bi bi-arrow-left-right me-2"></i> Borrow & Return</a>
-                <a href="../auth/logout.php" class="list-group-item list-group-item-action text-danger border-0"><i
+                <a href="../auth/logout.php" class="list-group-item list-group-item-action border-0" style="color: #8C3A35;"><i
                         class="bi bi-box-arrow-right me-2"></i> Logout</a>
             </div>
         </div>
@@ -127,7 +134,7 @@ $history_reads = mysqli_query($conn, $history_sql);
         <div class="col-md-9">
             <div class="card shadow-sm border-0 mb-5">
                 <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
-                    <h5 class="fw-bold"><i class="bi bi-book-half text-primary me-2"></i> My Current Reads</h5>
+                    <h5 class="fw-bold"><i class="bi bi-book-half me-2" style="color: #8C3A35;"></i> My Current Reads</h5>
                 </div>
                 <div class="card-body">
                     <?php if (count($current_books_data) > 0): ?>
@@ -162,18 +169,18 @@ $history_reads = mysqli_query($conn, $history_sql);
                                                 </div>
                                             </td>
                                             <td><?php echo date('M d, Y', strtotime($book['borrow_date'])); ?></td>
-                                            <td><?php echo date('M d, Y', strtotime($book['due_date'])); ?></td>
+                                            <td class="fw-semibold"><?php echo date('M d, Y', strtotime($book['due_date'])); ?></td>
                                             <td class="text-center">
                                                 <?php if ($book['is_overdue']): ?>
-                                                    <span class="badge bg-danger rounded-pill px-3">
+                                                    <span class="badge rounded-pill px-3 shadow-sm" style="background-color: #8C3A35;">
                                                         Overdue (<?php echo $book['days_left']; ?>d)
                                                     </span>
                                                 <?php elseif ($book['days_left'] <= 3): ?>
-                                                    <span class="badge bg-warning text-dark rounded-pill px-3">
+                                                    <span class="badge rounded-pill px-3 shadow-sm text-white" style="background-color: #B08A5B;">
                                                         Only <?php echo $book['days_left']; ?> day(s) left!
                                                     </span>
                                                 <?php else: ?>
-                                                    <span class="badge bg-success rounded-pill px-3">
+                                                    <span class="badge rounded-pill px-3 shadow-sm" style="background-color: #82a841;">
                                                         <?php echo $book['days_left']; ?> days left
                                                     </span>
                                                 <?php endif; ?>
@@ -216,8 +223,10 @@ $history_reads = mysqli_query($conn, $history_sql);
                                                 <small><?php echo htmlspecialchars($row['author']); ?></small>
                                             </td>
                                             <td><?php echo date('M d, Y', strtotime($row['borrow_date'])); ?></td>
-                                            <td class="text-success fw-semibold"><i class="bi bi-check-circle-fill me-1"></i>
-                                                <?php echo date('M d, Y', strtotime($row['returned_date'])); ?></td>
+                                            <td class="fw-semibold" style="color: #757A45;">
+                                                <i class="bi bi-check-circle-fill me-1"></i>
+                                                <?php echo date('M d, Y', strtotime($row['returned_date'])); ?>
+                                            </td>
                                         </tr>
                                     <?php endwhile; ?>
                                 </tbody>

@@ -29,7 +29,7 @@ $cat_result = $conn->query($cat_sql);
 
 <div class="container my-4">
     <div class="p-5 mb-5 rounded-4 shadow-lg text-white text-center" 
-         style="background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('../assets/images/hero-bg.jpg'); background-size: cover; background-position: center;">
+         style="background-image: linear-gradient(rgba(28, 17, 10, 0.7), rgba(28, 17, 10, 0.4)), url('../assets/images/hero-bg.jpg'); background-size: cover; background-position: center;">
         <h1 class="display-4 fw-bold mb-3">Discover Your Next Read</h1>
         <p class="lead mb-0 text-white-50">Browse our collection of thousands of books. Find, borrow, and enjoy!</p>
     </div>
@@ -38,13 +38,13 @@ $cat_result = $conn->query($cat_sql);
         <div class="card-body p-4">
             <form method="GET" action="" class="row g-3">
                 <div class="col-md-7">
-                    <label class="form-label fw-semibold">🔍 Search Books</label>
+                    <label class="form-label fw-semibold"> Search Books</label>
                     <input type="text" name="search" class="form-control form-control-lg" 
                            placeholder="Search by title or author..." 
                            value="<?php echo htmlspecialchars($search); ?>">
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label fw-semibold">📂 Category</label>
+                    <label class="form-label fw-semibold"> Category</label>
                     <select name="category" class="form-select form-select-lg">
                         <option value="">All Categories</option>
                         <?php while ($cat = $cat_result->fetch_assoc()): ?>
@@ -65,7 +65,7 @@ $cat_result = $conn->query($cat_sql);
     </div>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold text-dark">📖 Books Collection</h3>
+        <h3 class="fw-bold text-dark">Books Collection</h3>
         <span class="badge bg-secondary fs-6 p-2 shadow-sm">
             <?php echo $result->num_rows; ?> book(s) found
         </span>
@@ -99,12 +99,13 @@ $cat_result = $conn->query($cat_sql);
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title fw-bold mb-1"><?php echo htmlspecialchars($book['title']); ?></h5>
                             <p class="card-text text-muted small mb-3">
-                                <i class="bi bi-person me-1"></i> <?php echo htmlspecialchars($book['author']); ?>
+                                <i class="bi bi-person me-1" style="color: #8C3A35;"></i> <?php echo htmlspecialchars($book['author']); ?>
                             </p>
                             <div class="d-flex justify-content-between align-items-center mb-3 mt-auto">
-                                <span class="badge bg-info text-dark shadow-sm"><?php echo htmlspecialchars($book['category']); ?></span>
-                                <small class="text-success fw-bold">
-                                    📗 <?php echo $book['available_qty']; ?>/<?php echo $book['total_qty']; ?> left
+                                <span class="badge bg-info shadow-sm"><?php echo htmlspecialchars($book['category']); ?></span>
+                                
+                                <small class="fw-bold" style="color: #82a841;">
+                                    <?php echo $book['available_qty']; ?>/<?php echo $book['total_qty']; ?> left
                                 </small>
                             </div>
                             <a href="book_details.php?id=<?php echo $book['id']; ?>" 
@@ -117,8 +118,8 @@ $cat_result = $conn->query($cat_sql);
             <?php endwhile; ?>
         </div>
     <?php else: ?>
-        <div class="alert alert-warning text-center p-5 shadow-sm border-0 rounded-4">
-            <h4 class="fw-bold mb-3">😔 No books found</h4>
+        <div class="alert alert-warning text-center p-5 shadow-sm border-0 rounded-4" style="background-color: #FDFBF7; border: 1px solid rgba(176, 138, 91, 0.3) !important;">
+            <h4 class="fw-bold mb-3" style="color: #8C3A35;">😔 No books found</h4>
             <p class="text-muted mb-0">Try a different search term or browse all categories.</p>
         </div>
     <?php endif; ?>
@@ -130,16 +131,17 @@ $cat_result = $conn->query($cat_sql);
 }
 .hover-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 1rem 2rem rgba(0,0,0,0.15) !important;
+    /* 🟢 Changed shadow to match the warm dark theme instead of stark black 🟢 */
+    box-shadow: 0 1rem 2rem rgba(28, 17, 10, 0.2) !important;
 }
 .book-cover-wrapper {
     position: relative;
     overflow: hidden;
-    background: #f0f0f0;
+    background: #E9D9B2; /* Changed fallback background to theme beige */
 }
 .book-cover {
     width: 100%;
-    height: 320px; /* Made slightly taller for better poster proportions */
+    height: 320px;
     object-fit: cover;
     transition: transform 0.3s ease;
 }
@@ -150,7 +152,7 @@ $cat_result = $conn->query($cat_sql);
     position: absolute;
     top: 12px;
     right: 12px;
-    background-color: #28a745;
+    background-color: #82a841; /* 🟢 New Sage Green 🟢 */
     color: white;
     padding: 6px 14px;
     border-radius: 20px;
@@ -161,7 +163,7 @@ $cat_result = $conn->query($cat_sql);
     position: absolute;
     top: 12px;
     right: 12px;
-    background-color: #dc3545;
+    background-color: #8C3A35; /* 🟢 Vintage Red-Brown 🟢 */
     color: white;
     padding: 6px 14px;
     border-radius: 20px;

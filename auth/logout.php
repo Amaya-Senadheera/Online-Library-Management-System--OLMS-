@@ -24,11 +24,12 @@ $base_url = '/Online-Library-Management-System--OLMS-/';
     
     <style>
         body {
-            /* Cinematic dark background matching the dashboard */
+            /* 🟢 Reverted to the original deep slate/black cinematic background 🟢 */
             background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('../assets/images/hero-bg.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         .logout-card {
             max-width: 420px;
@@ -45,24 +46,23 @@ $base_url = '/Online-Library-Management-System--OLMS-/';
 
 <body class="vh-100 d-flex align-items-center justify-content-center">
 
-    <div class="card shadow-lg border-0 logout-card bg-white text-center p-5 mx-3">
+    <div class="card shadow-lg border-0 logout-card text-center p-5 mx-3" style="background-color: #FDFBF7;">
         <div class="mb-4">
-            <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 70px; height: 70px;">
-                <img src="../assets/images/logo.png" alt="OLMS Logo" width="40" height="40" onerror="this.style.display='none'">
-            </div>
             
-            <h3 class="fw-bold text-dark mb-2">See you soon! 👋</h3>
+            <img src="../assets/images/logo.png" alt="OLMS Logo" width="60" height="60" class="mb-3" onerror="this.style.display='none'">
+            
+            <h3 class="fw-bold mb-2" style="color: #1C110A;">See you soon! 👋</h3>
             <p class="text-muted">Safely logging you out of your account...</p>
         </div>
         
         <div class="d-flex justify-content-center align-items-center my-3">
-            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem; border-width: 0.25rem;">
+            <div class="spinner-border" role="status" style="color: #82a841; width: 3rem; height: 3rem; border-width: 0.25rem;">
                 <span class="visually-hidden">Loading...</span>
             </div>
         </div>
         
         <p class="small text-muted mt-4 mb-0 fw-semibold">
-            <i class="bi bi-shield-check text-success me-1"></i> Redirecting to homepage
+            <i class="bi bi-shield-check me-1" style="color: #82a841;"></i> Redirecting to homepage
         </p>
     </div>
 

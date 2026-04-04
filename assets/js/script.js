@@ -1,5 +1,5 @@
 /* ==========================================================================
-   OLMS Global JavaScript
+   OLMS Global JavaScript (Vintage Theme Updated)
    UI Lead: Member 3 - Rakash MRM_244166J
    
    Note: Put all custom frontend interactivity here.
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // ============================================
-    // 2. Book card hover effect (already in CSS, but adding JS fallback)
+    // 2. Book card hover effect
     // ============================================
     const bookCards = document.querySelectorAll('.hover-card');
     bookCards.forEach(card => {
@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     const searchInput = document.querySelector('input[name="search"]');
     if (searchInput && searchInput.value) {
-        // Add clear button if search is active
         const formGroup = searchInput.closest('.row');
         if (formGroup && !document.querySelector('.clear-search-btn')) {
             const clearBtn = document.createElement('button');
@@ -64,7 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
             stars.forEach(s => {
                 if (s === this) found = true;
                 if (found) {
-                    s.style.color = '#ffc107';
+                    // 🟢 CHANGED: Replaced bright yellow with Vintage Ochre
+                    s.style.color = '#B08A5B';
                 } else {
                     s.style.color = '#ddd';
                 }
@@ -79,7 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 stars.forEach((s, idx) => {
                     const starValue = stars.length - idx;
                     if (starValue <= checkedValue) {
-                        s.style.color = '#ffc107';
+                        // 🟢 CHANGED: Replaced bright yellow with Vintage Ochre
+                        s.style.color = '#B08A5B';
                     } else {
                         s.style.color = '#ddd';
                     }
@@ -109,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // ============================================
-    // 6. Confirm delete for admin actions (if any delete buttons)
+    // 6. Confirm delete for admin actions
     // ============================================
     const deleteButtons = document.querySelectorAll('.delete-confirm');
     deleteButtons.forEach(btn => {
@@ -148,8 +149,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     const backToTop = document.createElement('button');
     backToTop.innerHTML = '↑';
-    backToTop.className = 'back-to-top-btn';
+    backToTop.className = 'back-to-top-btn shadow';
     backToTop.setAttribute('aria-label', 'Back to top');
+    
+    // 🟢 CHANGED: Replaced Bootstrap Blue with Vintage Red-Brown (#8C3A35)
     backToTop.style.cssText = `
         position: fixed;
         bottom: 30px;
@@ -157,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
         width: 45px;
         height: 45px;
         border-radius: 50%;
-        background: #0d6efd;
+        background: #8C3A35; 
         color: white;
         border: none;
         cursor: pointer;
@@ -166,8 +169,19 @@ document.addEventListener('DOMContentLoaded', function() {
         transition: all 0.3s ease;
         z-index: 1000;
         font-size: 24px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 15px rgba(28, 17, 10, 0.3);
     `;
+    
+    // Add hover effect via JS since it's an inline style
+    backToTop.addEventListener('mouseenter', () => {
+        backToTop.style.background = '#6E2D29'; // Darker red-brown on hover
+        backToTop.style.transform = 'translateY(-3px)';
+    });
+    backToTop.addEventListener('mouseleave', () => {
+        backToTop.style.background = '#8C3A35'; // Back to normal
+        backToTop.style.transform = 'translateY(0)';
+    });
+
     document.body.appendChild(backToTop);
     
     window.addEventListener('scroll', () => {
@@ -199,10 +213,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // ============================================
-    // 10. Book search suggestions (typeahead - optional)
-    // ============================================
-    // This can be expanded later with AJAX
     console.log('OLMS - Catalog & UI Loaded ✅');
 });
 
@@ -232,15 +242,16 @@ function showToast(message, type = 'success') {
     })();
     
     const toastId = 'toast-' + Date.now();
+    // Note: bg-info uses the Vintage Ochre defined in CSS. Success/Danger remain default.
     const bgColor = type === 'success' ? 'bg-success' : (type === 'error' ? 'bg-danger' : 'bg-info');
     
     const toastHTML = `
-        <div id="${toastId}" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
-            <div class="toast-header ${bgColor} text-white">
+        <div id="${toastId}" class="toast border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+            <div class="toast-header ${bgColor} text-white border-0">
                 <strong class="me-auto">OLMS Notification</strong>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
             </div>
-            <div class="toast-body">
+            <div class="toast-body bg-white text-dark">
                 ${message}
             </div>
         </div>

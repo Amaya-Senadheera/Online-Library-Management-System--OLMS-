@@ -36,16 +36,16 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-    <link href="<?php echo $base_url; ?>assets/css/style.css" rel="stylesheet">
+    <link href="<?php echo $base_url; ?>assets/css/style.css?v=<?php echo time(); ?>" rel="stylesheet">
 </head>
 
-<body class="bg-light">
+<body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
     <div class="container">
 
         <a class="navbar-brand fw-bold d-flex align-items-center" href="<?php echo $base_url; ?>index.php">
-            <img src="<?php echo $base_url; ?>assets/images/logo.png" alt="OLMS Logo" width="35" height="35" class="me-2">
+            <img src="<?php echo $base_url; ?>assets/images/logo.png" alt="OLMS Logo" width="35" height="35" class="me-2 rounded-circle shadow-sm" style="object-fit: cover; border: 2px solid var(--vintage-ochre);">
             OLMS
         </a>
 
