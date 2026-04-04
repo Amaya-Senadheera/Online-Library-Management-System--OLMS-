@@ -82,7 +82,7 @@ Online-Library-Management-System--OLMS-/
 4. **Open** `http://localhost/phpmyadmin` in your web browser.
 5. **Import the Database:** Go to the "Import" tab and upload the `database/olms.sql` file. 
    *(Note: You do not need to create a database first! The script will automatically build the `olms` database and insert the default Admin account).*
-6. **Run the App:** Open `http://localhost/Online-Library-Management-System--OLMS-/` in your browser.
+6. **Run the App:** Open `http://localhost/Online-Library-Management-System--OLMS-/index.php` in your browser.
 
 ### 📌 Notes
 
