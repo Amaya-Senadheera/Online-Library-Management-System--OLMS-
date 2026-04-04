@@ -47,10 +47,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     transition: all 0.3s ease;
     border-radius: 8px;
     background-color: #ffffff;
-    border: 1px solid rgba(176, 138, 91, 0.4); /* 🟢 Subtle Ochre Border */
+    border: 1px solid rgba(176, 138, 91, 0.4); /*  Subtle Ochre Border */
 }
 
-/* 🟢 Smooth Red-Brown focus glow instead of jumpy blue zoom 🟢 */
+/*  Smooth Red-Brown focus glow instead of jumpy blue zoom  */
 .input-hover:focus {
     border-color: #8C3A35;
     box-shadow: 0 0 0 0.25rem rgba(140, 58, 53, 0.25);
